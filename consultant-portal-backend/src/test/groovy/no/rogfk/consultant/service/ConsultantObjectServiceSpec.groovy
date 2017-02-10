@@ -51,9 +51,9 @@ class ConsultantObjectServiceSpec extends Specification {
         consultantObjectService.setupPendingConsultant(pendingConsultant)
 
         then:
-        pendingConsultant.loginDisabled == false
+        pendingConsultant.loginDisabled == true
         pendingConsultant.state == ConsultantState.PENDING.name()
-        pendingConsultant.password != null
+        pendingConsultant.password == null
     }
 
     def "Setup pending consultant without mandatory attribute set"() {
