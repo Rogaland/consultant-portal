@@ -1,0 +1,48 @@
+buildscript {
+	ext {
+		springBootVersion = '1.5.1.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'groovy'
+apply plugin: 'org.springframework.boot'
+
+jar {
+	baseName = 'consultant-portal-backend'
+	version = '0.0.1-SNAPSHOT'
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+	maven {
+		url "http://dl.bintray.com/rfkikt/maven"
+	}
+}
+
+
+dependencies {
+	compile('no.rogk:rfk-ldap-utilities:0.0.1')
+	compile('no.rogfk:jwt-spring-boot:0.0.14')
+	compile('org.springframework.boot:spring-boot-devtools')
+	compile('org.projectlombok:lombok:1.16.6')
+	compile('org.springframework.boot:spring-boot-starter-web')
+	compile('org.springframework.ldap:spring-ldap-core:2.0.4.RELEASE')
+	compile('io.springfox:springfox-swagger2:2.4.0')
+	compile('io.springfox:springfox-swagger-ui:2.4.0')
+	compile('no.rogfk:rest-sms-wrapper-spring-boot:0.0.10')
+	compile('org.apache.commons:commons-lang3:3.4')
+
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+	testCompile('org.spockframework:spock-spring:1.0-groovy-2.4')
+	testCompile('cglib:cglib-nodep:3.2.4')
+}

@@ -1,0 +1,33 @@
+spring:
+rfk:
+  ldap:
+    url:
+    user:
+    password:
+  consultant:
+    base-container:
+    username-prefix: "K%s"
+    base-url: "https://konsulent.rogfk.no/"
+  message:
+    sms:
+      invite-consultant: "%s har sendt deg en lenke slik at du kan opprette en konsulentbruker hos Rogaland fylkeskommune. Lenken er gyldig i %s minutter.\n\n%s"
+      confirm-consultant: "Hei %s! Vi har opprettet en konto til deg.\nBrukernavn: %s\nPassord: %s. Vennligst gå til https://minkonto.rogfk.no og bytt passord."
+      delete-consultant: "Hei %s! Din konto hos Rogaland fylkeskommune er slettet."
+sms:
+ mode: "MANUAL_QUEUE"
+ rest:
+  endpoint:
+  mobileparameter: "sMobileNumber"
+  messageparameter: "sMessage"
+  userparameter: "sUser"
+  user:
+  passwordparameter: "sPass"
+  password:
+jwt:
+  max-age-minutes: 60
+  issuer: "rogfk.no"
+  key: "asdfghjkløæ1234567890"
+  encryption: false
+jasypt:
+  encryptor:
+    password:
