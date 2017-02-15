@@ -20,23 +20,23 @@
         </a>
       </div>
       <div class="col-xs-4">
-        <a class="card card-banner card-blue-light" [routerLink]="['/']" [queryParams]="{type: 'invited'}">
+        <a class="card card-banner card-yellow-light" [routerLink]="['/']" [queryParams]="{type: 'pending'}">
           <div class="card-body">
             <i class="icon fa fa-user fa-4x"></i>
             <div class="content">
               <div class="title">Besvarte invitasjoner</div>
-              <div class="value"><span class="sign"></span>{{(consultants.INVITED && consultants.INVITED.length) || 0}}</div>
+              <div class="value"><span class="sign"></span>{{(consultants.PENDING && consultants.PENDING.length) || 0}}</div>
             </div>
           </div>
         </a>
       </div>
       <div class="col-xs-4">
-        <a class="card card-banner card-yellow-light" [routerLink]="['/']" [queryParams]="{type: 'pending'}">
+        <a class="card card-banner card-blue-light" [routerLink]="['/']" [queryParams]="{type: 'invited'}">
           <div class="card-body">
             <i class="icon fa fa-user fa-4x"></i>
             <div class="content">
               <div class="title">Invitasjoner</div>
-              <div class="value"><span class="sign"></span>{{(consultants.PENDING && consultants.PENDING.length) || 0}}</div>
+              <div class="value"><span class="sign"></span>{{(consultants.INVITED && consultants.INVITED.length) || 0}}</div>
             </div>
           </div>
         </a>
@@ -55,15 +55,17 @@
                   <th>Organisasjon</th>
                   <th>Mobil</th>
                   <th>Status</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let item of visibleConsultants">
-                  <td>{{item.firstName}}</td>
-                  <td>{{item.lastName}}</td>
-                  <td>{{item.organization}}</td>
-                  <td>{{item.mobile}}</td>
-                  <td>
+                  <td style="vertical-align: middle!important;">{{item.firstName}}</td>
+                  <td *ngIf="item.state !== 'INVITED'" style="vertical-align: middle!important;">{{item.lastName}}</td>
+                  <td *ngIf="item.state === 'INVITED'" style="vertical-align: middle!important;"></td>
+                  <td style="vertical-align: middle!important;">{{item.organization}}</td>
+                  <td style="vertical-align: middle!important;">{{item.mobile}}</td>
+                  <td style="vertical-align: middle!important;">
                     <span *ngIf="item.state === 'CONFIRMED'" class="badge badge-success badge-icon">
                       <i class="fa fa-check" aria-hidden="true"></i><span>{{item.state}}</span>
                     </span>
@@ -73,6 +75,9 @@
                     <span *ngIf="item.state === 'PENDING'" class="badge badge-warning badge-icon">
                       <i class="fa fa-clock-o" aria-hidden="true"></i><span>{{item.state}}</span>
                     </span>
+                  </td>
+                  <td style="vertical-align: middle!important;">
+                    <button *ngIf="item.state === 'PENDING'" type="submit" class="btn btn-danger btn-xs">Godkjenn</button>
                   </td>
                 </tr>
               </tbody>
