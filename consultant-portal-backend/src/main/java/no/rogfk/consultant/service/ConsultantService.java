@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import javax.naming.Name;
 import javax.naming.directory.SearchControls;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -150,7 +151,7 @@ public class ConsultantService {
         return Optional.ofNullable(ldapTemplate.findByDn(dn, Consultant.class));
     }
 
-    public List<Consultant> getConsultants(String ownerDn, boolean all) {
+    public Map<String, List<Consultant>> getConsultants(String ownerDn, boolean all) {
 
         List<Consultant> consultants = ldapTemplate.findAll(
                 LdapNameBuilder.newInstance(configService.getConsultantBaseContainer()).build(),
@@ -158,11 +159,15 @@ public class ConsultantService {
         );
 
         if (all) {
-            return consultants;
+            return consultants.stream().collect(Collectors.groupingBy(s -> s.getState()));
         } else {
-            return consultants.stream().filter(
-                    c -> (c.getOwner().toLowerCase().equals(ownerDn.toLowerCase()))
-            ).collect(Collectors.toList());
+            return consultants.stream()
+                    .filter(c -> (c.getOwner().toLowerCase().equals(ownerDn.toLowerCase())))
+                    .collect(Collectors.groupingBy(s -> s.getState()));
+
+            //return consultants.stream().filter(
+            //        c -> (c.getOwner().toLowerCase().equals(ownerDn.toLowerCase()))
+            //).collect(Collectors.toList());
         }
     }
 }
