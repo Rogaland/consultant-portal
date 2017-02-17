@@ -162,12 +162,8 @@ public class ConsultantService {
             return consultants.stream().collect(Collectors.groupingBy(s -> s.getState()));
         } else {
             return consultants.stream()
-                    .filter(c -> (c.getOwner().toLowerCase().equals(ownerDn.toLowerCase())))
+                    .filter(c -> c.getOwner() != null && (c.getOwner().toLowerCase().equals(ownerDn.toLowerCase())))
                     .collect(Collectors.groupingBy(s -> s.getState()));
-
-            //return consultants.stream().filter(
-            //        c -> (c.getOwner().toLowerCase().equals(ownerDn.toLowerCase()))
-            //).collect(Collectors.toList());
         }
     }
 }

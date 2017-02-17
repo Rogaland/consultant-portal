@@ -76,6 +76,4 @@ public class ConsultantController {
 
         return ResponseEntity.ok(consultantService.getConsultants(ownerDn, all));
     }
-
-
 }

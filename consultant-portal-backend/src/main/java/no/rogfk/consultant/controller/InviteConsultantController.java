@@ -44,25 +44,4 @@ public class InviteConsultantController {
 
         return ResponseEntity.badRequest().build();
     }
-
-    @ApiOperation("Get invited consultant")
-    @RequestMapping(
-            method = RequestMethod.GET)
-    public ResponseEntity getInvitedConsultants(@JwtParam(name = "t") ConsultantToken consultantToken) {
-        log.info("ConsultantId: {}", consultantToken.getId());
-        Optional<Consultant> consultant = consultantService.getConsultant(consultantToken.getId());
-        if (consultant.isPresent()) {
-            if (!consultant.get().getState().equals(ConsultantState.INVITED.name())) {
-                throw new ConsultantAlreadyRegistered("Du har allerede registert deg.");
-            }
-            consultant.get().setLastName(null);
-            return ResponseEntity.ok(consultant.get());
-        }
-        return ResponseEntity.notFound().build();
-    }
-
-    @ExceptionHandler(ConsultantAlreadyRegistered.class)
-    public ResponseEntity handleAlreadyRegistered(Exception e) {
-        return ResponseEntity.status(HttpStatus.GONE).body(new ErrorResponse(e.getMessage()));
-    }
 }

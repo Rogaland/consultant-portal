@@ -1,0 +1,69 @@
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Rogaland fylkeskommune - Konsulentregistrering</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <img src="logo.png" class="center-block img-responsive" alt="Rogaland Fylkeskommune logo"/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <h2>Konsulentregistrering</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <p th:text="'Du har blitt invitert av: ' + ${invitername}" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <strong><p th:text="${message}"/></strong>
+        </div>
+    </div>
+    <div class="row" th:if="${#strings.isEmpty(message)}">
+        <div class="col-xs-12">
+            <form action=""  method="post" th:object="${consultant}" enctype="application/x-www-form-urlencoded">
+                <div class="form-group">
+                    <label for="firstName">Fornavn</label>
+                    <input class="form-control" required="required"  th:field="*{firstName}" type="text" id="firstName" placeholder="Fornavn"/>
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Etternavn</label>
+                    <input class="form-control" required="required"  th:field="*{lastName}" type="text" id="lastName" placeholder="Etternavn"/>
+                </div>
+                <div class="form-group">
+                    <label for="organization">Organisasjon</label>
+                    <input class="form-control" required="required" th:field="*{organization}" type="text" id="organization" placeholder="Organisasjon"/>
+                </div>
+                <div class="form-group">
+                    <label for="mail">Epost</label>
+                    <input class="form-control" required="required" th:field="*{mail}" type="text" id="mail" placeholder="Epost"/>
+                </div>
+
+                <input  class="form-control" type="hidden" th:field="*{cn}" id="cn"/>
+                <input  class="form-control" type="hidden" th:field="*{dn}" id="dn"/>
+                <input  class="form-control" type="hidden" th:field="*{mobile}" id="mobile"/>
+                <input  class="form-control" type="hidden" th:field="*{state}" id="state"/>
+                <input  class="form-control" type="hidden" th:field="*{owner}" id="owner"/>
+                <input  class="form-control" type="hidden" th:field="*{inviteTimeStamp}" id="inviteTimeStamp"/>
+
+                <input type="submit" class="btn btn-primary btn-block" value="Registrer"/>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
