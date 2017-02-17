@@ -14,7 +14,7 @@ rfk:
       confirm-consultant: "Hei %s! Vi har opprettet en konto til deg.\nBrukernavn: %s\nPassord: %s. Vennligst gå til https://minkonto.rogfk.no og bytt passord."
       delete-consultant: "Hei %s! Din konto hos Rogaland fylkeskommune er slettet."
 sms:
- mode: "MANUAL_QUEUE"
+ mode: "SEND_IMMEDIATELY"
  rest:
   endpoint:
   mobileparameter: "sMobileNumber"
