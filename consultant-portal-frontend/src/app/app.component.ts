@@ -46,8 +46,8 @@ export class AppComponent implements OnInit {
   }
 
   inviteConsultant(mobile: number){
+    this.consultantNumber = null;
     this.invitationService.inviteConsultant(mobile).subscribe(result => {
-      this.consultantNumber = null;
       this.findConsultants();
     }, err => {
       this.showError = true;
