@@ -18,8 +18,9 @@ export class AppComponent implements OnInit {
   private consultantState: string;
   private consultantNumber: number;
 
-  private showError: boolean;
-  errorMessage: string;
+  private isMessageVisible: boolean;
+  private message: string;
+  private messageType: string;
 
   private sub: any;
   constructor(private consultantService: ConsultantService,
@@ -45,16 +46,24 @@ export class AppComponent implements OnInit {
     });
   }
 
+  showMessage(message: string, messageType: string):void {
+    this.isMessageVisible = true;
+    this.messageType = messageType;
+    this.message = message;
+    setTimeout(() => {
+      this.isMessageVisible = false;
+      this.messageType = '';
+      this.message = '';
+    }, 5000);
+  }
+
   inviteConsultant(mobile: number){
     this.consultantNumber = null;
     this.invitationService.inviteConsultant(mobile).subscribe(result => {
+      this.showMessage('Invitasjon sendt.', 'alert-success');
       this.findConsultants();
     }, err => {
-      this.showError = true;
-      this.errorMessage = "Invitasjon ikke fullført. Allerede invitert?";
-      setTimeout(() => {
-        this.showError = false;
-       }, 5000);
+      this.showMessage('Invitasjon ikke fullført. Allerede invitert?', 'alert-warning');
      });
   }
 
@@ -63,8 +72,10 @@ export class AppComponent implements OnInit {
   }
 
   confirm(consultant: Consultant) {
-    console.log(consultant);
-    this.consultantService.update(consultant).subscribe(r => this.findConsultants());
+    this.consultantService.update(consultant).subscribe(r => {
+      this.showMessage('Invitasjon godkjent.', 'alert-success');
+      this.findConsultants();
+    });
   }
 }
 
