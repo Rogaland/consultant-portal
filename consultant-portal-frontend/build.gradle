@@ -1,0 +1,22 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+
+defaultTasks 'clean', 'install_frontend', 'webjar'
+
+task webjar(type: Jar, dependsOn: "jar") {
+  from(fileTree('dist')) {
+    into 'META-INF/resources'
+  }
+}
+
+clean {
+  delete 'dist'
+}
+
+task npm_install(type:Exec){
+  commandLine 'npm', 'install'
+}
+task install_frontend(type:Exec){
+  dependsOn npm_install
+  commandLine './node_modules/.bin/ng', 'build',  '--prod'
+}

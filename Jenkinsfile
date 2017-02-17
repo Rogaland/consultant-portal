@@ -13,10 +13,10 @@ node {
         }
 
         stage('deploy') {
-        //    sh 'chmod +x docker-build'
-        //    withCredentials([string(credentialsId: 'rogfkGuestUserPortalRunParams', variable: 'runParams')]) {
-        //        sh 'sudo -E sh ./docker-build'
-        //    }
+            sh 'chmod +x docker-build'
+            withCredentials([string(credentialsId: 'rogfkConsultantPortalRunParams', variable: 'runParams')]) {
+                sh 'sudo -E sh ./docker-build'
+            }
         }
     }
 

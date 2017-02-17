@@ -1,3 +1,5 @@
 rootProject.name = 'consultant-portal'
 include 'consultant-portal-backend'
+include 'consultant-portal-frontend'
+
 

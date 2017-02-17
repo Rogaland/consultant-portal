@@ -24,6 +24,7 @@ targetCompatibility = 1.8
 
 repositories {
 	mavenCentral()
+	flatDir { dirs '../consultant-portal-frontend/build/libs' }
 	maven {
 		url "http://dl.bintray.com/rfkikt/maven"
 	}
@@ -31,6 +32,7 @@ repositories {
 
 
 dependencies {
+	compile name: 'consultant-portal-frontend'
 	compile('no.rogk:rfk-ldap-utilities:0.0.1')
 	compile('no.rogfk:jwt-spring-boot:0.0.14')
 	compile('org.springframework.boot:spring-boot-devtools')

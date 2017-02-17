@@ -1,5 +1,9 @@
-defaultTasks 'consultant-portal-backend:clean',
+defaultTasks 'consultant-portal-frontend:clean',
+        'consultant-portal-frontend:install_frontend',
+        'consultant-portal-frontend:webjar',
+        'consultant-portal-backend:clean',
         'consultant-portal-backend:build'
+
 group 'no.rogfk'
 version '0.0.1-SNAPSHOT'
 

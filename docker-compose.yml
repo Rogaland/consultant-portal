@@ -1,0 +1,18 @@
+version: '2'
+
+services:
+  rogfk-guest-user-portal:
+    build: .
+    image: rogfk/consultant-portal
+    container_name: rogfk-consultant-portal
+    restart: unless-stopped
+    environment:
+      PARAMS: ${runParams}
+      TZ: Europe/Oslo
+      logging.level.root: INFO
+    ports:
+      - "8501:8080"
+    logging:
+      driver: "gelf"
+      options:
+        gelf-address: "udp://localhost:12201"
