@@ -72,9 +72,18 @@ export class AppComponent implements OnInit {
   }
 
   confirm(consultant: Consultant) {
-    this.consultantService.update(consultant).subscribe(r => {
+    this.consultantService.update(consultant).subscribe(result => {
       this.showMessage('Invitasjon godkjent.', 'alert-success');
       this.findConsultants();
+    });
+  }
+
+  delete(consultant: Consultant) {
+    this.consultantService.delete(consultant).subscribe(result => {
+      this.showMessage('Konsulent slettet.', 'alert-success');
+      this.findConsultants();
+    }, err => {
+      this.showMessage('Konsulenten ble ikke slettet!', 'alert-warning');
     });
   }
 }

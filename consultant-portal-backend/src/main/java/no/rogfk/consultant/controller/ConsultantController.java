@@ -4,6 +4,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import no.rogfk.consultant.model.Consultant;
+import no.rogfk.consultant.model.ErrorResponse;
+import no.rogfk.consultant.model.SuccessResponse;
 import no.rogfk.consultant.service.ConsultantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -40,15 +42,14 @@ public class ConsultantController {
     }
 
     @ApiOperation("Delete consultant")
-    @RequestMapping(
-            method = RequestMethod.DELETE,
-            consumes = MediaType.APPLICATION_JSON_VALUE
+    @RequestMapping(value = "/{id}",
+            method = RequestMethod.DELETE
     )
-    public ResponseEntity deleteConsultant(@RequestBody Consultant consultant) {
-        log.info("Consultant: {}", consultant);
+    public ResponseEntity deleteConsultant(@PathVariable final String id) {
+        log.info("Consultant: {}", id);
 
-        if (consultantService.deleteConsultant(consultant)) {
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body(consultant);
+        if (consultantService.deleteConsultant(id)) {
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(new SuccessResponse("Konsulenten ble slettet."));
         }
 
         return ResponseEntity.badRequest().build();

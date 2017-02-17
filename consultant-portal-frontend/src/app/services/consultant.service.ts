@@ -23,4 +23,8 @@ export class ConsultantService {
   update(consultant: Consultant) {
     return this.http.put(this.baseUrl, consultant).map(res => res.json(), err => console.error(err));
   }
+
+  delete(consultant: Consultant) {
+    return this.http.delete(this.baseUrl + "/" + consultant.cn).map(res => res.json(), err => console.error(err));
+  }
 }

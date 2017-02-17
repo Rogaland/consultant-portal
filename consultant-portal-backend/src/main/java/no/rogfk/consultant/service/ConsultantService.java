@@ -121,11 +121,12 @@ public class ConsultantService {
         return false;
     }
 
-    public boolean deleteConsultant(Consultant consultant) {
+    public boolean deleteConsultant(String cn) {
+        Optional<Consultant> consultant = getConsultant(cn);
 
-        if (exists(consultant.getDn())) {
-            ldapTemplate.delete(consultant);
-            notifyDeletedConsultant(consultant);
+        if (consultant.isPresent()) {
+            ldapTemplate.delete(consultant.get());
+            notifyDeletedConsultant(consultant.get());
             return true;
 
         }
@@ -133,15 +134,17 @@ public class ConsultantService {
     }
 
     private boolean notifyDeletedConsultant(Consultant consultant) {
-        String notifyConsultantResponse = smsService.sendSms(
-                String.format(configService.getConsultantDeleteMessage(),
-                        String.format("%s %s", consultant.getFirstName(), consultant.getLastName())
-                ),
-                consultant.getMobile()
-        );
+        if (!consultant.getState().equals(ConsultantState.INVITED.name())) {
+            String notifyConsultantResponse = smsService.sendSms(
+                    String.format(configService.getConsultantDeleteMessage(),
+                            String.format("%s %s", consultant.getFirstName(), consultant.getLastName())
+                    ),
+                    consultant.getMobile()
+            );
 
-        if (notifyConsultantResponse.contains(">true<")) {
-            return true;
+            if (notifyConsultantResponse.contains(">true<")) {
+                return true;
+            }
         }
         return false;
     }

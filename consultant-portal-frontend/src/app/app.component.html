@@ -108,7 +108,8 @@
                     </span>
                   </td>
                   <td style="vertical-align: middle!important;">
-                    <button *ngIf="item.state === 'PENDING'" type="submit" class="btn btn-danger btn-xs" (click)="confirm(item)" >Godkjenn</button>
+                    <button *ngIf="item.state === 'PENDING'" type="submit" class="btn btn-success btn-xs" (click)="confirm(item)" >Godkjenn</button>
+                    <button type="submit" class="btn btn-danger btn-xs" (click)="delete(item)" >Slett</button>
                   </td>
                 </tr>
               </tbody>
