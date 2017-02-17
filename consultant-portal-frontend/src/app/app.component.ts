@@ -61,5 +61,10 @@ export class AppComponent implements OnInit {
   filterConsultants() {
     this.visibleConsultants = this.consultants[this.consultantState.toUpperCase()];
   }
+
+  confirm(consultant: Consultant) {
+    console.log(consultant);
+    this.consultantService.update(consultant).subscribe(r => this.findConsultants());
+  }
 }
 

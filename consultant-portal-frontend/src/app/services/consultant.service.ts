@@ -19,4 +19,8 @@ export class ConsultantService {
         return res.json();
       });
   }
+
+  update(consultant: Consultant) {
+    return this.http.put(this.baseUrl, consultant).map(res => res.json(), err => console.error(err));
+  }
 }
