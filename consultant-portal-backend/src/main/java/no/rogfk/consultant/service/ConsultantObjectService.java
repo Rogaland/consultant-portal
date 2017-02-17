@@ -57,5 +57,8 @@ public class ConsultantObjectService {
     public void setupConfirmedConsultant(Consultant consultant) {
         consultant.setState(ConsultantState.CONFIRMED.name());
         consultant.setPassword(passwordService.generatePassword());
+        consultant.setRoleString(configService.getRoleString());
+        consultant.setTitle(configService.getConsultantTitle());
+        consultant.setSource(configService.getSource());
     }
 }

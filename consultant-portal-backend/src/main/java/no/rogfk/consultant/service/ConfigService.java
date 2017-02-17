@@ -38,6 +38,15 @@ public class ConfigService {
     @Value("${rfk.consultant.base-url}")
     private String baseUrl;
 
+    @Value("${rfk.consultant.role-stringl}")
+    private String roleString;
+
+    @Value("${rfk.consultant.title}")
+    private String consultantTitle;
+
+    @Value("${rfk.consultant.source}")
+    private String source;
+
     @Value("${jwt.max-age-minutes}")
     private long jwtMaxAgeMinutes;
 

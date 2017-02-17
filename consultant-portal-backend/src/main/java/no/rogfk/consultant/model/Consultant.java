@@ -44,6 +44,22 @@ public final class Consultant {
     private Name owner;
 
     @ApiModelProperty(value = "This will be automatically set", hidden = true)
+    @Attribute(name = "ou")
+    private String roleString;
+
+    @ApiModelProperty(value = "This will be automatically set", hidden = true)
+    @Attribute(name = "title")
+    private String title;
+
+    @ApiModelProperty(value = "This will be automatically set", hidden = true)
+    @Attribute(name = "brfkSource")
+    private String source;
+
+    @ApiModelProperty(value = "Expire timestamp for the consultant account", hidden = true)
+    @Attribute(name = "brfkConsultantExpireDate")
+    private String expireDate;
+
+    @ApiModelProperty(value = "This will be automatically set", hidden = true)
     @Attribute(name = "loginDisabled")
     private boolean loginDisabled;
 
@@ -136,6 +152,38 @@ public final class Consultant {
 
     public void setState(String state) {
         this.state = state;
+    }
+
+    public String getRoleString() {
+        return roleString;
+    }
+
+    public void setRoleString(String roleString) {
+        this.roleString = roleString;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    public String getExpireDate() {
+        return expireDate;
+    }
+
+    public void setExpireDate(String expireDate) {
+        this.expireDate = expireDate;
     }
 
     public String getDn() {
