@@ -22,9 +22,9 @@
 .btn-floating-top {
   position: fixed;
   bottom: auto;
-  left: auto;
+  right: auto;
   top: 30px;
-  right: 30px;
+  left: 30px;
   width: auto;
   height: auto;
   transform: translateZ(0);

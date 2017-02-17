@@ -4129,7 +4129,7 @@ ui-view > .app-messaging-container {
       font-size: 0.9em; } }
 
 .btn {
-  padding: 10px 30px;
+  /*padding: 10px 30px;*/
   border-radius: 0;
   border-width: 1px;
   border-style: solid;
