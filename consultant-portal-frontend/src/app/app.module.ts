@@ -1,4 +1,5 @@
-import { ConsultantService } from './serivces/consultant.service';
+import { InvitationService } from './services/invitation.service';
+import { ConsultantService } from './services/consultant.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -17,7 +18,7 @@ import { AppComponent } from './app.component';
     HttpModule,
     AppRoutingModule
   ],
-  providers: [ConsultantService],
+  providers: [ConsultantService, InvitationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

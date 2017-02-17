@@ -2,9 +2,9 @@
   <div class="app-container">
     <div class="row">
       <div class="col-xs-12">
-          <div style="margin-bottom: 30px; margin-top: 50px;">
-            <img src="assets/rogfk_liggende_farger.jpg" height="75" width="261"/>
-          </div>
+        <div style="margin-bottom: 30px; margin-top: 50px;">
+          <img src="assets/rogfk_liggende_farger.jpg" height="75" width="261" />
+        </div>
       </div>
     </div>
     <div class="row">
@@ -42,6 +42,37 @@
         </a>
       </div>
     </div>
+    <div class="row">
+      <div class="col-xs-12">
+          <div class="alert alert-warning" *ngIf="showError" role="alert">
+            {{errorMessage}}
+          </div>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Inviter konsulent</h4>
+              </div>
+              <div class="modal-body">
+                <input type="tel" class="form-control" [(ngModel)]="consultantNumber" placeholder="Skriv inn konsulentens mobilnummer">
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Avbryt</button>
+                <button type="button" class="btn btn-sm btn-success" data-dismiss="modal" (click)="inviteConsultant(consultantNumber)" >Inviter</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
 
     <div class="row">
       <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -86,6 +117,12 @@
         </div>
       </div>
     </div>
+    <div class="btn-floating-top" id="help-actions">
+  <button type="button" class="btn btn-default btn-toggle"  data-toggle="modal" data-target="#myModal">
+    <i class="icon fa fa-plus"></i>
+    <span class="help-text">Shortcut</span>
+  </button><div class="btn-bg"></div>
+</div>
     <router-outlet></router-outlet>
   </div>
 </div>

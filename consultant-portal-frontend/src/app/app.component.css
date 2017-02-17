@@ -3,3 +3,102 @@
 @import '../assets/css/theme/blue.css';
 @import '../assets/css/theme/red.css';
 @import '../assets/css/theme/yellow.css';
+
+
+.btn-invite {
+    width: 40px;
+    height: 40px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border: 1px solid #dfe6e8;
+    border-left: none;
+    background-color: transparent;
+    color: #dfe6e8;
+    font-size: 1.4em;
+}
+
+/*  */
+
+.btn-floating-top {
+  position: fixed;
+  bottom: auto;
+  left: auto;
+  top: 30px;
+  right: 30px;
+  width: auto;
+  height: auto;
+  transform: translateZ(0);
+  z-index: 101108; }
+  .btn-floating-top .btn-bg {
+    position: absolute;
+    top: auto;
+    left: 0;
+    bottom: 0;
+    right: auto;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: #84b819;
+    box-shadow: 0 1px 3px #84b819;
+    z-index: 101108;
+    transition: all 0.3s ease; }
+  .btn-floating-top .btn-toggle {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    margin-bottom: 0;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: row;
+        flex-direction: row;
+    -ms-flex-wrap: nowrap;
+        flex-wrap: nowrap;
+    -ms-flex-align: center;
+        align-items: center;
+    -ms-flex-pack: center;
+        justify-content: center;
+    border: 0;
+    background-color: transparent;
+    box-shadow: none;
+    z-index: 101110; }
+    .btn-floating-top .btn-toggle i {
+      font-size: 2em;
+      color: #FFF; }
+    .btn-floating-top .btn-toggle .help-text {
+      display: none; }
+  .btn-floating-top .toggle-content {
+    position: absolute;
+    top: auto;
+    left: auto;
+    bottom: 0;
+    right: 0;
+    width: auto;
+    height: auto;
+    padding: 0;
+    margin: 0;
+    z-index: 101110;
+    display: none; }
+    .btn-floating-top .toggle-content ul.actions {
+      list-style: none;
+      padding: 0;
+      margin: 0; }
+      .btn-floating-top .toggle-content ul.actions > li {
+        padding: 0; }
+        .btn-floating-top .toggle-content ul.actions > li a {
+          display: block;
+          color: #FFF;
+          text-decoration: none;
+          padding: 10px 20px;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+          text-transform: uppercase;
+          font-size: 0.9em; }
+          .btn-floating-top .toggle-content ul.actions > li a:hover {
+            cursor: pointer;
+            background-color: rgba(255, 255, 255, 0.1); }
+  .btn-floating-top.active .btn-bg {
+    border-radius: 3px; }
+  .btn-floating-top.active .btn-toggle {
+    display: none; }
+  .btn-floating-top.active .toggle-content {
+    position: relative;
+    display: block; }
