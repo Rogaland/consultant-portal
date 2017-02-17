@@ -44,8 +44,8 @@
     </div>
     <div class="row">
       <div class="col-xs-12">
-          <div class="alert alert-warning" *ngIf="showError" role="alert">
-            {{errorMessage}}
+          <div class="alert" [ngClass]="messageType" *ngIf="isMessageVisible" role="alert">
+            {{message}}
           </div>
       </div>
     </div>
