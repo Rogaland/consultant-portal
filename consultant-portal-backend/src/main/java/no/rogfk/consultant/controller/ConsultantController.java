@@ -4,6 +4,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import no.rogfk.consultant.model.Consultant;
+import no.rogfk.consultant.model.ConsultantState;
 import no.rogfk.consultant.model.ErrorResponse;
 import no.rogfk.consultant.model.SuccessResponse;
 import no.rogfk.consultant.service.ConsultantService;
@@ -13,7 +14,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -47,12 +47,21 @@ public class ConsultantController {
     )
     public ResponseEntity deleteConsultant(@PathVariable final String id) {
         log.info("Consultant: {}", id);
-
-        if (consultantService.deleteConsultant(id)) {
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body(new SuccessResponse("Konsulenten ble slettet."));
+        Optional<Consultant> consultant = consultantService.deleteConsultant(id);
+        String successResponeMessage = "Invitasjonen ble slettet.";
+        if (consultant.isPresent()) {
+            if (!consultant.get().getState().equals(ConsultantState.INVITED.name())) {
+                successResponeMessage = String.format("%s %s ble slettet.",
+                        consultant.get().getFirstName(), consultant.get().getLastName()
+                );
+            }
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(
+                    new SuccessResponse(successResponeMessage));
         }
 
-        return ResponseEntity.badRequest().build();
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                new ErrorResponse("Vi kunne ikke finne konsulenten du forsøker å slette.")
+        );
     }
 
     @ApiOperation("Get consultant")

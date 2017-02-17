@@ -121,16 +121,17 @@ public class ConsultantService {
         return false;
     }
 
-    public boolean deleteConsultant(String cn) {
+    public Optional<Consultant> deleteConsultant(String cn) {
         Optional<Consultant> consultant = getConsultant(cn);
 
         if (consultant.isPresent()) {
             ldapTemplate.delete(consultant.get());
             notifyDeletedConsultant(consultant.get());
-            return true;
+
+            return consultant;
 
         }
-        return false;
+        return Optional.empty();
     }
 
     private boolean notifyDeletedConsultant(Consultant consultant) {

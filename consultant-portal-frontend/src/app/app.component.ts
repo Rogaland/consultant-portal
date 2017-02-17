@@ -60,7 +60,7 @@ export class AppComponent implements OnInit {
   inviteConsultant(mobile: number){
     this.consultantNumber = null;
     this.invitationService.inviteConsultant(mobile).subscribe(result => {
-      this.showMessage('Invitasjon sendt.', 'alert-success');
+      this.showMessage(result.message, 'alert-success');
       this.findConsultants();
     }, err => {
       this.showMessage('Invitasjon ikke fullført. Allerede invitert?', 'alert-warning');
@@ -80,11 +80,15 @@ export class AppComponent implements OnInit {
 
   delete(consultant: Consultant) {
     this.consultantService.delete(consultant).subscribe(result => {
-      this.showMessage('Konsulent slettet.', 'alert-success');
+      this.showMessage(result.message, 'alert-success');
       this.findConsultants();
     }, err => {
       this.showMessage('Konsulenten ble ikke slettet!', 'alert-warning');
     });
+  }
+
+  refresh() {
+    this.findConsultants();
   }
 }
 

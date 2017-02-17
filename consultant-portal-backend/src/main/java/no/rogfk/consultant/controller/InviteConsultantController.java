@@ -4,10 +4,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import no.rogfk.consultant.exception.ConsultantAlreadyRegistered;
-import no.rogfk.consultant.model.Consultant;
-import no.rogfk.consultant.model.ConsultantState;
-import no.rogfk.consultant.model.ConsultantToken;
-import no.rogfk.consultant.model.ErrorResponse;
+import no.rogfk.consultant.model.*;
 import no.rogfk.consultant.service.ConsultantService;
 import no.rogfk.jwt.annotations.JwtParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +36,7 @@ public class InviteConsultantController {
 
         consultant.setOwner(ownerDn);
         if (consultantService.inviteConsultant(consultant)) {
-            return ResponseEntity.status(HttpStatus.CREATED).body(consultant);
+            return ResponseEntity.status(HttpStatus.CREATED).body(new SuccessResponse(String.format("En invitasjon ble sendt til %s", consultant.getMobile())));
         }
 
         return ResponseEntity.badRequest().build();
