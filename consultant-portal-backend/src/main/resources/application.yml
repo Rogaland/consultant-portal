@@ -7,7 +7,7 @@ rfk:
   consultant:
     base-container:
     username-prefix: "K%s"
-    base-url: "https://konsulent.rogfk.no/"
+    base-url: "https://konsulent.rogfk.no/register"
   message:
     sms:
       invite-consultant: "%s har sendt deg en lenke slik at du kan opprette en konsulentbruker hos Rogaland fylkeskommune. Lenken er gyldig i %s minutter.\n\n%s"
