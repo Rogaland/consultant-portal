@@ -1,7 +1,7 @@
 version: '2'
 
 services:
-  rogfk-guest-user-portal:
+  rogfk-consultant-portal:
     build: .
     image: rogfk/consultant-portal
     container_name: rogfk-consultant-portal
