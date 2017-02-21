@@ -2,10 +2,7 @@ package no.rogfk.consultant.service;
 
 import no.rogfk.consultant.model.Consultant;
 import no.rogfk.consultant.model.ConsultantState;
-import no.rogfk.consultant.model.HostEmployee;
-import no.rogfk.consultant.utilities.InviteUrlGenerator;
 import no.rogfk.consultant.utilities.LdapConstants;
-import no.rogfk.sms.SmsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ldap.core.LdapTemplate;
 import org.springframework.ldap.support.LdapNameBuilder;
@@ -31,13 +28,7 @@ public class ConsultantService {
     LdapTemplate ldapTemplate;
 
     @Autowired
-    InviteUrlGenerator inviteUrlGenerator;
-
-    @Autowired
-    private SmsService smsService;
-
-    @Autowired
-    private HostEmployeeService hostEmployeeService;
+    private SmsNotifySerivce smsNotifySerivce;
 
     private SearchControls searchControls;
 
@@ -52,28 +43,11 @@ public class ConsultantService {
 
         if (!exists(consultant.getDn())) {
             ldapTemplate.create(consultant);
-            sendInvite(consultant);
+            smsNotifySerivce.sendInvite(consultant);
 
             return true;
         }
 
-        return false;
-    }
-
-    private boolean sendInvite(Consultant consultant) {
-        String url = inviteUrlGenerator.get(consultant);
-        HostEmployee hostEmployee = hostEmployeeService.getHostEmployee(consultant.getOwner());
-        String notifyConsultantResponse = smsService.sendSms(
-                String.format(configService.getConsultantInviteMessage(),
-                        hostEmployee.getFullname(),
-                        configService.getJwtMaxAgeMinutes(),
-                        url),
-                consultant.getMobile()
-        );
-
-        if (notifyConsultantResponse.contains(">true<")) {
-            return true;
-        }
         return false;
     }
 
@@ -98,26 +72,11 @@ public class ConsultantService {
             if (ConsultantState.valueOf(consultant.getState()) == ConsultantState.PENDING) {
                 consultantObjectService.setupConfirmedConsultant(consultant);
                 ldapTemplate.update(consultant);
-                notifyConfirmedConsultant(consultant);
+                smsNotifySerivce.notifyConfirmedConsultant(consultant);
                 return true;
             }
         }
 
-        return false;
-    }
-
-    private boolean notifyConfirmedConsultant(Consultant consultant) {
-        String notifyConsultantResponse = smsService.sendSms(
-                String.format(configService.getConsultantConfirmMessage(),
-                        String.format("%s %s", consultant.getFirstName(), consultant.getLastName()),
-                        consultant.getCn(),
-                        consultant.getPassword()),
-                consultant.getMobile()
-        );
-
-        if (notifyConsultantResponse.contains(">true<")) {
-            return true;
-        }
         return false;
     }
 
@@ -126,28 +85,12 @@ public class ConsultantService {
 
         if (consultant.isPresent()) {
             ldapTemplate.delete(consultant.get());
-            notifyDeletedConsultant(consultant.get());
+            smsNotifySerivce.notifyDeletedConsultant(consultant.get());
 
             return consultant;
 
         }
         return Optional.empty();
-    }
-
-    private boolean notifyDeletedConsultant(Consultant consultant) {
-        if (!consultant.getState().equals(ConsultantState.INVITED.name())) {
-            String notifyConsultantResponse = smsService.sendSms(
-                    String.format(configService.getConsultantDeleteMessage(),
-                            String.format("%s %s", consultant.getFirstName(), consultant.getLastName())
-                    ),
-                    consultant.getMobile()
-            );
-
-            if (notifyConsultantResponse.contains(">true<")) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public Optional<Consultant> getConsultant(String id) {

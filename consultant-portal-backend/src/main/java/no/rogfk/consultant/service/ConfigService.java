@@ -38,7 +38,7 @@ public class ConfigService {
     @Value("${rfk.consultant.base-url}")
     private String baseUrl;
 
-    @Value("${rfk.consultant.role-stringl}")
+    @Value("${rfk.consultant.role-string}")
     private String roleString;
 
     @Value("${rfk.consultant.title}")
