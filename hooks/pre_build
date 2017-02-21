@@ -1,3 +1,5 @@
 #!/bin/bash
 
-pwd
+echo "=> Building the binary"
+
+docker run --rm -v $(pwd):/usr/bin/app:rw niaquinto/gradle
