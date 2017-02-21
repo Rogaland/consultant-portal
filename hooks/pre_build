@@ -2,4 +2,4 @@
 
 echo "=> Building the binary"
 
-docker run --rm -v $(pwd):/usr/bin/app:rw niaquinto/gradle
+docker run --rm -v $(pwd):/usr/bin/app:rw niaquinto/gradle clean build
