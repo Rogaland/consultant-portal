@@ -2,4 +2,6 @@
 
 echo "=> Building the binary"
 
-docker run --rm -v $(pwd):/usr/bin/app:rw fsjovatsen/gradle-npm consultant-portal-frontend:clean consultant-portal-frontend:install_frontend consultant-portal-frontend:webjar consultant-portal-backend:clean consultant-portal-backend:build
+docker run --rm -v $(pwd):/app:rw fint/ubuntu-java-node-gradle ./gradlew
+
+#consultant-portal-frontend:clean consultant-portal-frontend:install_frontend consultant-portal-frontend:webjar consultant-portal-backend:clean consultant-portal-backend:build
