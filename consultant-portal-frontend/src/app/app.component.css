@@ -5,6 +5,18 @@
 @import '../assets/css/theme/yellow.css';
 
 
+.usertable {
+  border-bottom: 1px solid;
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  padding: 0.6em;
+  border-bottom-color: #dfe6e8;
+}
+
+.usertable.odd {
+  background-color: #f9f9f9;
+}
+
 .btn-invite {
     width: 40px;
     height: 40px;

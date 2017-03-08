@@ -75,6 +75,10 @@ public class ConsultantService {
                 smsNotifySerivce.notifyConfirmedConsultant(consultant);
                 return true;
             }
+            if (ConsultantState.valueOf(consultant.getState()) == ConsultantState.CONFIRMED) {
+                ldapTemplate.update(consultant);
+                return true;
+            }
         }
 
         return false;

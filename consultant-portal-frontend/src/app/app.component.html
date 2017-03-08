@@ -49,9 +49,9 @@
     </div>
     <div class="row">
       <div class="col-xs-12">
-          <div class="alert" [ngClass]="messageType" *ngIf="isMessageVisible" role="alert">
-            {{message}}
-          </div>
+        <div class="alert" [ngClass]="messageType" *ngIf="isMessageVisible" role="alert">
+          {{message}}
+        </div>
       </div>
     </div>
 
@@ -70,7 +70,7 @@
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Avbryt</button>
-                <button type="button" class="btn btn-sm btn-success" data-dismiss="modal" (click)="inviteConsultant(consultantNumber)" >Inviter</button>
+                <button type="button" class="btn btn-sm btn-success" data-dismiss="modal" (click)="inviteConsultant(consultantNumber)">Inviter</button>
               </div>
             </div>
           </div>
@@ -78,57 +78,60 @@
       </div>
     </div>
 
-
-    <div class="row">
-      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <div class="card card-mini">
-          <div class="card-body no-padding table-responsive">
-            <table class="table card-table">
-              <thead>
-                <tr>
-                  <th>Fornavn</th>
-                  <th>Etternavn</th>
-                  <th>Organisasjon</th>
-                  <th>Mobil</th>
-                  <th>Status</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let item of visibleConsultants">
-                  <td style="vertical-align: middle!important;">{{item.firstName}}</td>
-                  <td *ngIf="item.state !== 'INVITED'" style="vertical-align: middle!important;">{{item.lastName}}</td>
-                  <td *ngIf="item.state === 'INVITED'" style="vertical-align: middle!important;"></td>
-                  <td style="vertical-align: middle!important;">{{item.organization}}</td>
-                  <td style="vertical-align: middle!important;">{{item.mobile}}</td>
-                  <td style="vertical-align: middle!important;">
-                    <span *ngIf="item.state === 'CONFIRMED'" class="badge badge-success badge-icon">
+    <div class="row" style="background-color: #f0f4f5; color: #999; font-size: 1.0em; font-weight: 400; text-transform: uppercase; margin: 0px;padding: 0.6em;">
+      <div class="col-md-2">Fornavn</div>
+      <div class="col-md-2">Etternavn</div>
+      <div class="col-md-2">Organisasjon</div>
+      <div class="col-md-2">Mobil</div>
+      <div class="col-md-2">Status</div>
+      <div class="col-md-1">Utløpsdato</div>
+      <div class="col-md-1">&nbsp;</div>
+    </div>
+    <div *ngFor="let item of visibleConsultants; let i = index" (click)="rowSelected(i)"  [ngClass]="{'odd' : i % 2 != 0}" class="usertable" >
+      <div class="row">
+        <div class="col-md-2">{{item.firstName}}</div>
+        <div class="col-md-2">
+          <span *ngIf="item.state !== 'INVITED'">{{item.lastName}}</span>
+        </div>
+        <div class="col-md-2">{{item.organization}}</div>
+        <div class="col-md-2">{{item.mobile}}</div>
+        <div class="col-md-2">
+          <span *ngIf="item.state === 'CONFIRMED'" class="badge badge-success badge-icon">
                       <i class="fa fa-check" aria-hidden="true"></i><span>{{item.state}}</span>
-                    </span>
-                    <span *ngIf="item.state === 'INVITED'" class="badge badge-info badge-icon">
+          </span>
+          <span *ngIf="item.state === 'INVITED'" class="badge badge-info badge-icon">
                       <i class="fa fa-clock-o" aria-hidden="true"></i><span>{{item.state}}</span>
-                    </span>
-                    <span *ngIf="item.state === 'PENDING'" class="badge badge-warning badge-icon">
+          </span>
+          <span *ngIf="item.state === 'PENDING'" class="badge badge-warning badge-icon">
                       <i class="fa fa-clock-o" aria-hidden="true"></i><span>{{item.state}}</span>
-                    </span>
-                  </td>
-                  <td style="vertical-align: middle!important;">
-                    <button *ngIf="item.state === 'PENDING'" type="submit" class="btn btn-success btn-xs" (click)="confirm(item)" ><span class="fa fa-thumbs-up" aria-hidden="true"></span></button>
-                    <button type="submit" class="btn btn-danger btn-xs" (click)="delete(item)" ><span class="fa fa-remove" aria-hidden="true"></span></button>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          </span>
+        </div>
+        <div class="col-md-1">{{item.expireDate | date: 'dd.MM.yyyy'}}</div>
+        <div class="col-md-1">
+          <button *ngIf="item.state === 'PENDING'" type="submit" class="btn btn-success btn-xs" (click)="confirm(item)"><span class="fa fa-thumbs-up" aria-hidden="true"></span></button>
+          <button type="submit" class="btn btn-danger btn-xs" (click)="delete(item)"><span class="fa fa-remove" aria-hidden="true"></span></button>
+        </div>
+      </div>
+      <div class="row" *ngIf="i === selectedRow && item.state === 'CONFIRMED'">
+        <div class="col-md-4">
+            <div class="form-group">
+              <label>Utløpsdato</label>
+              <my-date-picker locale="no" [options]="myDatePickerOptions" [(ngModel)]="expireDate"></my-date-picker>
+            </div>
+        </div>
+        <div class="col-md-4">
+          <button type="button"  style="margin-top: 1.7em;" class="btn btn-primary" (click)="saveExpireDate(i)">Lagre</button>
         </div>
       </div>
     </div>
+
     <div class="btn-floating-top" id="help-actions">
-  <button type="button" class="btn btn-default btn-toggle"  data-toggle="modal" data-target="#myModal">
+      <button type="button" class="btn btn-default btn-toggle" data-toggle="modal" data-target="#myModal">
     <i class="icon fa fa-plus"></i>
     <span class="help-text">Shortcut</span>
-  </button><div class="btn-bg"></div>
-</div>
+  </button>
+      <div class="btn-bg"></div>
+    </div>
     <router-outlet></router-outlet>
   </div>
 </div>

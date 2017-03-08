@@ -1,9 +1,11 @@
+import { IMyDayLabels } from 'mydatepicker/dist';
 import { InvitationService } from './services/invitation.service';
-import { Consultant } from './models/consultant';
 import { ActivatedRoute } from '@angular/router';
 import { ConsultantService } from './services/consultant.service';
+import { Consultant } from './models/consultant';
 import { ConsultantDto } from './models/consultantDto';
 import { Component, OnInit } from '@angular/core';
+import { IMyOptions } from "mydatepicker";
 
 @Component({
   selector: 'app-root',
@@ -22,14 +24,36 @@ export class AppComponent implements OnInit {
   private message: string;
   private messageType: string;
 
+  private expireDate: any;
+
+  private selectedRow: number;
+
+  private myDatePickerOptions: IMyOptions = {
+    todayBtnTxt: 'I dag',
+    dateFormat: 'dd.mm.yyyy',
+  };
+
   private sub: any;
   constructor(private consultantService: ConsultantService,
     private route: ActivatedRoute,
     private invitationService: InvitationService) {
-      this.findConsultants();
+    this.findConsultants();
+
+    let today = new Date();
+    this.myDatePickerOptions.disableUntil = {
+      year: today.getFullYear(),
+      month: (today.getMonth() + 1),
+      day: today.getDate()
+    };
+
+    this.myDatePickerOptions.disableSince = {
+      year: today.getFullYear(),
+      month: (today.getMonth() + 4),
+      day: today.getDate()
+    };
   }
 
-  findConsultants(){
+  findConsultants() {
     this.consultantService.getConsultants().subscribe(result => {
       this.consultants = result;
       this.filterConsultants();
@@ -46,7 +70,7 @@ export class AppComponent implements OnInit {
     });
   }
 
-  showMessage(message: string, messageType: string):void {
+  showMessage(message: string, messageType: string): void {
     this.isMessageVisible = true;
     this.messageType = messageType;
     this.message = message;
@@ -57,14 +81,14 @@ export class AppComponent implements OnInit {
     }, 5000);
   }
 
-  inviteConsultant(mobile: number){
+  inviteConsultant(mobile: number) {
     this.consultantNumber = null;
     this.invitationService.inviteConsultant(mobile).subscribe(result => {
       this.showMessage(result.message, 'alert-success');
       this.findConsultants();
     }, err => {
       this.showMessage('Invitasjon ikke fullført. Allerede invitert?', 'alert-warning');
-     });
+    });
   }
 
   filterConsultants() {
@@ -87,8 +111,35 @@ export class AppComponent implements OnInit {
     });
   }
 
+  rowSelected(idx: number) {
+    this.selectedRow = idx;
+
+    if (this.visibleConsultants[idx].expireDate) {
+      let d = new Date(this.visibleConsultants[idx].expireDate);
+      let a = {
+        date: {
+          year: d.getFullYear(),
+          month: (d.getMonth() + 1),
+          day: d.getDate()
+        }
+      };
+      this.expireDate = a;
+    } else {
+      this.expireDate = null;
+    }
+  }
+
+  saveExpireDate(idx: number) {
+    let consultant = this.visibleConsultants[idx];
+    consultant.setExpireDate(this.expireDate);
+    this.consultantService.update(consultant).subscribe(res => this.showMessage('Oppdatert', 'alert-success'),
+      err => {
+        consultant.expireDate = null;
+        this.showMessage('Feil ved lagring', 'alert-danger');
+      });
+  }
+
   refresh() {
     this.findConsultants();
   }
 }
-

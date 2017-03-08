@@ -9,4 +9,13 @@ export class Consultant {
     owner: string;
     inviteTimeStamp: string;
     state: string;
+    expireDate: any;
+
+    setExpireDate(date: any) {
+        if (date && date.jsdate) {
+            this.expireDate = date.jsdate;
+        } else if (date) {
+            this.expireDate = date;
+        }
+    }
 }

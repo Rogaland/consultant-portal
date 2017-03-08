@@ -1,3 +1,4 @@
+import { ConsultantDto } from '../models/consultantDto';
 import { Consultant } from '../models/consultant';
 import { Headers, Http } from '@angular/http';
 import { Injectable } from '@angular/core';
@@ -16,7 +17,9 @@ export class ConsultantService {
     return this.http
       .get(this.baseUrl)
       .map(res => {
-        return res.json();
+        let a = Object.assign(new ConsultantDto(), res.json());
+        a.CONFIRMED = a.CONFIRMED.map(c => Object.assign(new Consultant(), c));
+        return a;
       });
   }
 

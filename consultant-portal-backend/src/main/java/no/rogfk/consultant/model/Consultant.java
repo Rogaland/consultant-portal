@@ -1,7 +1,11 @@
 package no.rogfk.consultant.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import no.rogfk.consultant.utilities.LdapDateStringToDateDeserializer;
+import no.rogfk.consultant.utilities.LdapDateStringToDateSerializer;
 import org.springframework.ldap.odm.annotations.Attribute;
 import org.springframework.ldap.odm.annotations.Entry;
 import org.springframework.ldap.odm.annotations.Id;
@@ -57,6 +61,8 @@ public final class Consultant {
 
     @ApiModelProperty(value = "Expire timestamp for the consultant account", hidden = true)
     @Attribute(name = "brfkConsultantExpireDate")
+    @JsonSerialize(using = LdapDateStringToDateSerializer.class)
+    @JsonDeserialize(using = LdapDateStringToDateDeserializer.class)
     private String expireDate;
 
     @ApiModelProperty(value = "This will be automatically set", hidden = true)

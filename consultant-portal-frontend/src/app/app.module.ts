@@ -1,3 +1,4 @@
+import { MyDatePickerModule } from 'mydatepicker';
 import { InvitationService } from './services/invitation.service';
 import { ConsultantService } from './services/consultant.service';
 import { BrowserModule } from '@angular/platform-browser';
@@ -16,7 +17,8 @@ import { AppComponent } from './app.component';
     BrowserModule,
     FormsModule,
     HttpModule,
-    AppRoutingModule
+    AppRoutingModule,
+    MyDatePickerModule
   ],
   providers: [ConsultantService, InvitationService],
   bootstrap: [AppComponent]
