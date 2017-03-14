@@ -1,7 +1,26 @@
+buildscript {
+  repositories {
+    maven {
+      url "https://plugins.gradle.org/m2/"
+    }
+  }
+  dependencies {
+    classpath "com.moowork.gradle:gradle-node-plugin:1.1.1"
+  }
+}
+apply plugin: 'com.moowork.node'
 apply plugin: 'java'
 apply plugin: 'maven'
 
 defaultTasks 'clean', 'install_frontend', 'webjar'
+
+// configure gradle-node-plugin
+node {
+  version = '6.9.2'
+  download = false
+  workDir = file("${project.projectDir}/node")
+  nodeModulesDir = file("${project.projectDir}/")
+}
 
 task webjar(type: Jar, dependsOn: "jar") {
   from(fileTree('dist')) {
@@ -9,14 +28,14 @@ task webjar(type: Jar, dependsOn: "jar") {
   }
 }
 
+task npmBuild() {}
+npmBuild.dependsOn(npm_run_build)
+
 clean {
   delete 'dist'
 }
 
-task npm_install(type:Exec){
-  commandLine 'npm', 'install'
-}
-task install_frontend(type:Exec){
-  dependsOn npm_install
-  commandLine './node_modules/.bin/ng', 'build',  '--prod'
+task install_frontend {
+  dependsOn 'npm_install'
+  dependsOn 'npmBuild'
 }
