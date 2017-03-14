@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head></head>
+<body>
+<div class="container">
+
+    <div class="row">
+        <div class="col-xs-12">
+            <img src="" data-th-src="|cid:logo|" class="center-block img-responsive"
+                 alt="Rogaland Fylkeskommune logo"/>
+        </div>
+    </div>
+
+    <br/>
+    <br/>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <h2 th:text="'Hei / Dear ' + ${consultantFullname} + '!'"/>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <p th:text="'Velkommen som konsulent hos Rogaland fylkeskommune. Under finner du det du trenger for å få koblet deg til systemene hos oss. Hvis du trenger mer informasjon så ta kontakt med meg.'"/>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <p th:text="'Welcome as a conultant at Rogaland fylkeskommune. This email will give you the necessary information to connect to our systems. Do not hesitate to contact me if you have any questions.'"/>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-xs-12">
+            <p>
+                <strong th:text="'Ditt brukernavn er / Your username is: ' + ${consultantUsername}"/><br/>
+                Passordet vil bli sendt på SMS / The password will be sent by SMS.
+            </p>
+        </div>
+    </div>
+
+    <br/>
+    <br/>
+    <div class="row">
+
+        <p>
+            <strong>Med vennlig hilsen / Best Regards</strong>
+            <div th:text="${ownerFullname}"/>
+            <div th:text="'M: ' + ${ownerMobile} + ' | E: ' + ${ownerEmail}"/>
+        <br/><br/><br/>
+        <small>
+            Rogaland fylkeskommune | IKT- og arkivavdeling | T: 51 51 67 00 | E: brukerhjelp@rogfk.no | W: <a
+                href="http://www.rogfk.no">http://www.rogfk.no</a>
+        </small>
+
+        </p>
+    </div>
+
+</div>
+
+
+</body>
+
+</html>
