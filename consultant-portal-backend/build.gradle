@@ -44,6 +44,7 @@ dependencies {
 	compile('no.rogfk:rest-sms-wrapper-spring-boot:0.0.10')
 	compile('org.apache.commons:commons-lang3:3.4')
 	compile("org.springframework.boot:spring-boot-starter-thymeleaf")
+	compile('org.springframework.boot:spring-boot-starter-mail')
 
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	testCompile('org.spockframework:spock-spring:1.0-groovy-2.4')

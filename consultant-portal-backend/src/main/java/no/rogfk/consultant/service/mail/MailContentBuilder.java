@@ -1,9 +1,11 @@
-package net.sjovatsen;
+package no.rogfk.consultant.service.mail;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
+
+import java.util.Map;
 
 
 @Service
@@ -11,13 +13,15 @@ public class MailContentBuilder {
 
     @Autowired
     private TemplateEngine templateEngine;
- 
-    public String build(String owner, String fullname, String username) {
+
+    public String build(Map<String, String> variables, String template) {
         Context context = new Context();
-        context.setVariable("owner", owner);
-        context.setVariable("fullname", fullname);
-        context.setVariable("username", username);
-        return templateEngine.process("mail", context);
+
+        variables.forEach((name, value) -> {
+            context.setVariable(name, value);
+        });
+
+        return templateEngine.process(template, context);
     }
  
 }

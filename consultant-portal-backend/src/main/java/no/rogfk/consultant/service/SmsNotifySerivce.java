@@ -1,5 +1,6 @@
 package no.rogfk.consultant.service;
 
+import lombok.extern.slf4j.Slf4j;
 import no.rogfk.consultant.model.Consultant;
 import no.rogfk.consultant.model.ConsultantState;
 import no.rogfk.consultant.model.HostEmployee;
@@ -8,6 +9,7 @@ import no.rogfk.sms.SmsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 public class SmsNotifySerivce {
 
@@ -25,6 +27,7 @@ public class SmsNotifySerivce {
 
     public boolean sendInvite(Consultant consultant) {
         String url = inviteUrlGenerator.get(consultant);
+        log.info(url);
         HostEmployee hostEmployee = hostEmployeeService.getHostEmployee(consultant.getOwner());
         String notifyConsultantResponse = smsService.sendSms(
                 String.format(configService.getConsultantInviteMessage(),
@@ -40,14 +43,8 @@ public class SmsNotifySerivce {
         return false;
     }
 
-    public boolean notifyConfirmedConsultant(Consultant consultant) {
-        String notifyConsultantResponse = smsService.sendSms(
-                String.format(configService.getConsultantConfirmMessage(),
-                        String.format("%s %s", consultant.getFirstName(), consultant.getLastName()),
-                        consultant.getCn(),
-                        consultant.getPassword()),
-                consultant.getMobile()
-        );
+    public boolean notifyNewConsultantPassword(Consultant consultant) {
+        String notifyConsultantResponse = smsService.sendSms(consultant.getPassword(), consultant.getMobile());
 
         if (notifyConsultantResponse.contains(">true<")) {
             return true;
