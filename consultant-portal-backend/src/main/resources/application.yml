@@ -1,4 +1,9 @@
 spring:
+  mail:
+    port: 465
+    protocol: "smtp"
+    defaultEncoding: "UTF-8"
+    host: "smtp.gmail.com"
 rfk:
   ldap:
     url:
@@ -14,7 +19,6 @@ rfk:
   message:
     sms:
       invite-consultant: "%s har sendt deg en lenke slik at du kan opprette en konsulentbruker hos Rogaland fylkeskommune. Lenken er gyldig i %s minutter.\n\n%s"
-      confirm-consultant: "Hei %s! Vi har opprettet en konto til deg.\nBrukernavn: %s\nPassord: %s. Vennligst gå til https://minkonto.rogfk.no og bytt passord."
       delete-consultant: "Hei %s! Din konto hos Rogaland fylkeskommune er slettet."
 sms:
  mode: "SEND_IMMEDIATELY"
@@ -30,7 +34,7 @@ sms:
 jwt:
   max-age-minutes: 60
   issuer: "rogfk.no"
-  key: "asdfghjkløæ1234567890"
+  key: "topsecret"
   encryption: false
 jasypt:
   encryptor:

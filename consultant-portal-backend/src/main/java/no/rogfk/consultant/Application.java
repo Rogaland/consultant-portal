@@ -4,7 +4,9 @@ import no.rogfk.jwt.annotations.EnableJwt;
 import no.rogfk.sms.annotations.EnableSmsWrapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
+@EnableScheduling
 @EnableSmsWrapper
 @EnableJwt(issuer = "rogfk.no", maxAgeMinutes = 60)
 @SpringBootApplication

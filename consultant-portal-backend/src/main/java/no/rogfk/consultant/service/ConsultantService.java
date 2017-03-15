@@ -30,6 +30,9 @@ public class ConsultantService {
     @Autowired
     private SmsNotifySerivce smsNotifySerivce;
 
+    @Autowired
+    private EmailNotifyService emailNotifyService;
+
     private SearchControls searchControls;
 
     public ConsultantService() {
@@ -72,7 +75,8 @@ public class ConsultantService {
             if (ConsultantState.valueOf(consultant.getState()) == ConsultantState.PENDING) {
                 consultantObjectService.setupConfirmedConsultant(consultant);
                 ldapTemplate.update(consultant);
-                smsNotifySerivce.notifyConfirmedConsultant(consultant);
+                smsNotifySerivce.notifyNewConsultantPassword(consultant);
+                emailNotifyService.notifyNewConsultant(consultant);
                 return true;
             }
             if (ConsultantState.valueOf(consultant.getState()) == ConsultantState.CONFIRMED) {
