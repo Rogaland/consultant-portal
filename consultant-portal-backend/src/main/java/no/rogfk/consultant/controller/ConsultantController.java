@@ -37,7 +37,21 @@ public class ConsultantController {
         if (consultantService.updateConsultant(consultant)) {
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(consultant);
         }
+        return ResponseEntity.badRequest().build();
+    }
 
+    @ApiOperation("Update consultant state")
+    @RequestMapping(
+            value = "progressstate",
+            method = RequestMethod.PUT,
+            consumes = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity updateConsultantState(@RequestBody Consultant consultant) {
+        log.info("Consultant: {}", consultant);
+
+        if (consultantService.progressState(consultant)) {
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(consultant);
+        }
         return ResponseEntity.badRequest().build();
     }
 

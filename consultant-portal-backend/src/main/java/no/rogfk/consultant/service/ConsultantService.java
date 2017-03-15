@@ -61,6 +61,14 @@ public class ConsultantService {
     }
 
     public boolean updateConsultant(Consultant consultant) {
+        if (exists(consultant.getDn())) {
+            ldapTemplate.update(consultant);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean progressState(Consultant consultant) {
 
         if (exists(consultant.getDn())) {
             if (ConsultantState.valueOf(consultant.getState()) == ConsultantState.INVITED) {
@@ -75,12 +83,7 @@ public class ConsultantService {
                 smsNotifySerivce.notifyConfirmedConsultant(consultant);
                 return true;
             }
-            if (ConsultantState.valueOf(consultant.getState()) == ConsultantState.CONFIRMED) {
-                ldapTemplate.update(consultant);
-                return true;
-            }
         }
-
         return false;
     }
 
