@@ -95,14 +95,16 @@ export class AppComponent implements OnInit {
     this.visibleConsultants = this.consultants[this.consultantState.toUpperCase()];
   }
 
-  confirm(consultant: Consultant) {
-    this.consultantService.update(consultant).subscribe(result => {
+  confirm(consultant: Consultant, evt: Event) {
+    evt.stopPropagation();
+    this.consultantService.progressState(consultant).subscribe(result => {
       this.showMessage('Invitasjon godkjent.', 'alert-success');
       this.findConsultants();
     });
   }
 
-  delete(consultant: Consultant) {
+  delete(consultant: Consultant, evt: Event) {
+    evt.stopPropagation();
     this.consultantService.delete(consultant).subscribe(result => {
       this.showMessage(result.message, 'alert-success');
       this.findConsultants();
@@ -111,9 +113,24 @@ export class AppComponent implements OnInit {
     });
   }
 
-  rowSelected(idx: number) {
+  rowSelected(idx: number, idx1: number, evt: Event) {
+    evt.stopPropagation();
+
+    if (evt && evt.srcElement && evt.srcElement.classList.contains('fa-chevron-right')) {
+      this.selectedRow = idx1;
+      this.setSelectedExpireDate(this.selectedRow);
+      return;
+    }
+
     this.selectedRow = idx;
 
+    if (this.selectedRow == null) {
+      return;
+    }
+    this.setSelectedExpireDate(this.selectedRow);
+  }
+
+  setSelectedExpireDate(idx: number): void {
     if (this.visibleConsultants[idx].expireDate) {
       let d = new Date(this.visibleConsultants[idx].expireDate);
       let a = {

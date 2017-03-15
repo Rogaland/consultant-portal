@@ -18,13 +18,23 @@ export class ConsultantService {
       .get(this.baseUrl)
       .map(res => {
         let a = Object.assign(new ConsultantDto(), res.json());
-        a.CONFIRMED = a.CONFIRMED.map(c => Object.assign(new Consultant(), c));
+        if(a.CONFIRMED){
+          a.CONFIRMED = a.CONFIRMED.map(c => Object.assign(new Consultant(), c));
+        }
+        if(a.PENDING){
+          a.PENDING = a.PENDING.map(c => Object.assign(new Consultant(), c));
+        }
+
         return a;
       });
   }
 
   update(consultant: Consultant) {
     return this.http.put(this.baseUrl, consultant).map(res => res.json(), err => console.error(err));
+  }
+
+  progressState(consultant: Consultant) {
+    return this.http.put(this.baseUrl + '/progressstate', consultant).map(res => res.json(), err => console.error(err));
   }
 
   delete(consultant: Consultant) {

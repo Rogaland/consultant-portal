@@ -82,19 +82,20 @@
       <div class="col-md-2">Fornavn</div>
       <div class="col-md-2">Etternavn</div>
       <div class="col-md-2">Organisasjon</div>
-      <div class="col-md-2">Mobil</div>
+      <div class="col-md-1">Mobil</div>
       <div class="col-md-2">Status</div>
       <div class="col-md-1">Utløpsdato</div>
       <div class="col-md-1">&nbsp;</div>
+      <div class="col-md-1">&nbsp;</div>
     </div>
-    <div *ngFor="let item of visibleConsultants; let i = index" (click)="rowSelected(i)"  [ngClass]="{'odd' : i % 2 != 0}" class="usertable" >
+    <div *ngFor="let item of visibleConsultants; let i = index" (click)="rowSelected(i, i, $event)"  [ngClass]="{'odd' : i % 2 != 0}" class="usertable" >
       <div class="row">
         <div class="col-md-2">{{item.firstName}}</div>
         <div class="col-md-2">
           <span *ngIf="item.state !== 'INVITED'">{{item.lastName}}</span>
         </div>
         <div class="col-md-2">{{item.organization}}</div>
-        <div class="col-md-2">{{item.mobile}}</div>
+        <div class="col-md-1">{{item.mobile}}</div>
         <div class="col-md-2">
           <span *ngIf="item.state === 'CONFIRMED'" class="badge badge-success badge-icon">
                       <i class="fa fa-check" aria-hidden="true"></i><span>{{item.state}}</span>
@@ -108,11 +109,14 @@
         </div>
         <div class="col-md-1">{{item.expireDate | date: 'dd.MM.yyyy'}}</div>
         <div class="col-md-1">
-          <button *ngIf="item.state === 'PENDING'" type="submit" class="btn btn-success btn-xs" (click)="confirm(item)"><span class="fa fa-thumbs-up" aria-hidden="true"></span></button>
-          <button type="submit" class="btn btn-danger btn-xs" (click)="delete(item)"><span class="fa fa-remove" aria-hidden="true"></span></button>
+          <button *ngIf="item.state === 'PENDING'" type="submit" [disabled]="!item.expireDate" class="btn btn-success btn-xs" (click)="confirm(item, $event)"><span class="fa fa-thumbs-up" aria-hidden="true"></span></button>
+          <button type="submit" class="btn btn-danger btn-xs" (click)="delete(item, $event)"><span class="fa fa-remove" aria-hidden="true"></span></button>
+        </div>
+        <div class="col-md-1" (click)="rowSelected(null, i, $event)">
+          <span class="fa fa-2x pull-right"  [ngClass]="{'fa-chevron-right': i !== selectedRow && item.state !== 'INVITED', 'fa-chevron-up': i === selectedRow && item.state !== 'INVITED'}" aria-hidden="true"></span>
         </div>
       </div>
-      <div class="row" *ngIf="i === selectedRow && item.state === 'CONFIRMED'">
+      <div class="row" *ngIf="i === selectedRow && item.state !== 'INVITED'">
         <div class="col-md-4">
             <div class="form-group">
               <label>Utløpsdato</label>
