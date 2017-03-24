@@ -52,7 +52,7 @@ public class RegisterController {
                                    Model model) {
         log.info("Consultant: {}", consultant);
         String message;
-        if (consultantService.updateConsultant(consultant)) {
+        if (consultantService.stageConsultant(consultant)) {
             message = "Takk for at du registrerte deg.";
         } else {
             message = "Vi klarte ikke registrere deg, vennligst ta kontakt med " + consultantToken.getInviterName();

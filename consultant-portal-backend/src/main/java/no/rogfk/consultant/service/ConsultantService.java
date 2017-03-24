@@ -71,7 +71,7 @@ public class ConsultantService {
         return false;
     }
 
-    public boolean progressState(Consultant consultant) {
+    public boolean stageConsultant(Consultant consultant) {
 
         if (exists(consultant.getDn())) {
             if (ConsultantState.valueOf(consultant.getState()) == ConsultantState.INVITED) {

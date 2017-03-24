@@ -49,7 +49,7 @@ public class ConsultantController {
     public ResponseEntity updateConsultantState(@RequestBody Consultant consultant) {
         log.info("Consultant: {}", consultant);
 
-        if (consultantService.progressState(consultant)) {
+        if (consultantService.stageConsultant(consultant)) {
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(consultant);
         }
         return ResponseEntity.badRequest().build();
