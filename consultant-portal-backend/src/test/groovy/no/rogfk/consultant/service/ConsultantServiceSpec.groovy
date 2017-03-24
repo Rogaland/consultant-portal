@@ -96,7 +96,7 @@ class ConsultantServiceSpec extends Specification {
 
     def "ProgressState from Invited to Pending"() {
         when:
-        def retVal = consultantService.progressState(new Consultant(dn: "o=rfk", state: ConsultantState.INVITED))
+        def retVal = consultantService.stageConsultant(new Consultant(dn: "o=rfk", state: ConsultantState.INVITED))
         then:
         retVal == true
         1 * consultantObjectService.setupPendingConsultant(_ as Consultant)
@@ -105,7 +105,7 @@ class ConsultantServiceSpec extends Specification {
 
     def "ProgressState from Pending to Confirmed"() {
         when:
-        def retVal = consultantService.progressState(new Consultant(dn: "o=rfk", state: ConsultantState.PENDING))
+        def retVal = consultantService.stageConsultant(new Consultant(dn: "o=rfk", state: ConsultantState.PENDING))
         then:
         retVal == true
         1 * consultantObjectService.setupConfirmedConsultant(_ as Consultant)
@@ -116,7 +116,7 @@ class ConsultantServiceSpec extends Specification {
 
     def "ProgressState for not existing consultant"() {
         when:
-        def retVal = consultantService.progressState(new Consultant(dn: "o=rfk"))
+        def retVal = consultantService.stageConsultant(new Consultant(dn: "o=rfk"))
         then:
         retVal == false
         1 * ldapTemplate.lookup(_ as Name) >> { throw new NameNotFoundException("test") }

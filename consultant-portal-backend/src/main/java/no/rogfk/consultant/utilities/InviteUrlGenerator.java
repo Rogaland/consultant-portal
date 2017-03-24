@@ -19,7 +19,7 @@ public class InviteUrlGenerator {
     public String get(Consultant consultant) {
         ConsultantToken consultantToken = new ConsultantToken();
         consultantToken.setId(consultant.getCn());
-        consultantToken.setInviterName("Ole Olsen");
+        consultantToken.setInviterName(consultantToken.getInviterName());
 
         return springJwtTokenizer.createWithUrl(configService.getBaseUrl(), "t", consultantToken);
     }
