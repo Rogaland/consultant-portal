@@ -14,19 +14,19 @@ import { IMyOptions } from "mydatepicker";
 })
 export class AppComponent implements OnInit {
 
-  private consultants: ConsultantDto = new ConsultantDto();
-  private visibleConsultants: Consultant[];
+  consultants: ConsultantDto = new ConsultantDto();
+  visibleConsultants: Consultant[];
 
-  private consultantState: string;
-  private consultantNumber: number;
+  consultantState: string;
+  consultantNumber: number;
 
-  private isMessageVisible: boolean;
-  private message: string;
-  private messageType: string;
+  isMessageVisible: boolean;
+  message: string;
+  messageType: string;
 
-  private expireDate: any;
+  expireDate: any;
 
-  private selectedRow: number;
+  selectedRow: number;
 
   private myDatePickerOptions: IMyOptions = {
     todayBtnTxt: 'I dag',
