@@ -34,7 +34,7 @@ sms:
 jwt:
   max-age-minutes: 60
   issuer: "rogfk.no"
-  key: "topsecret"
+  key: "asdfghjkløæ1234567890"
   encryption: false
 jasypt:
   encryptor:

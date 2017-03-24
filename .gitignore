@@ -6,3 +6,5 @@ build
 classes
 out
 *.log
+**/application-local.yml
+docker-compose.yml
