@@ -5,6 +5,14 @@
 @import '../assets/css/theme/yellow.css';
 
 
+.center {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: -100px;
+  margin-left: -100px;
+}
+
 .usertable {
   border-bottom: 1px solid;
   border-left: 1px solid #ddd;

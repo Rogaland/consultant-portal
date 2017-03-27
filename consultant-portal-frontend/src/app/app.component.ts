@@ -1,3 +1,4 @@
+import { SpinnerService } from './services/spinner.service';
 import { IMyDayLabels } from 'mydatepicker/dist';
 import { InvitationService } from './services/invitation.service';
 import { ActivatedRoute } from '@angular/router';
@@ -36,7 +37,8 @@ export class AppComponent implements OnInit {
   private sub: any;
   constructor(private consultantService: ConsultantService,
     private route: ActivatedRoute,
-    private invitationService: InvitationService) {
+    private invitationService: InvitationService,
+    private spinnerService: SpinnerService) {
     this.findConsultants();
 
     let today = new Date();
@@ -51,6 +53,10 @@ export class AppComponent implements OnInit {
       month: (today.getMonth() + 4),
       day: today.getDate()
     };
+  }
+
+  isLoading() {
+    return this.spinnerService.status();
   }
 
   findConsultants() {

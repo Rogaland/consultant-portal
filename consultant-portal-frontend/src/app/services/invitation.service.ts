@@ -10,7 +10,7 @@ export class InvitationService {
 
   private baseUrl: string = '/api/invited/consultants';
 
-  constructor(private http: Http) { }
+  constructor(private http: Http) {}
 
   inviteConsultant(mobile: number) {
       return this.http

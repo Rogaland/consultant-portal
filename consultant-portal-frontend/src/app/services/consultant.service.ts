@@ -1,3 +1,4 @@
+import { SpinnerService } from './spinner.service';
 import { ConsultantDto } from '../models/consultantDto';
 import { Consultant } from '../models/consultant';
 import { Headers, Http } from '@angular/http';
@@ -11,9 +12,10 @@ export class ConsultantService {
 
   private baseUrl: string = '/api/consultants';
 
-  constructor(private http: Http) { }
+  constructor(private http: Http, private spinnerService: SpinnerService) { }
 
   getConsultants() {
+    this.spinnerService.start();
     return this.http
       .get(this.baseUrl)
       .map(res => {
@@ -24,20 +26,41 @@ export class ConsultantService {
         if(a.PENDING){
           a.PENDING = a.PENDING.map(c => Object.assign(new Consultant(), c));
         }
-
+        this.spinnerService.stop();
         return a;
+      },
+      err => {
+        this.spinnerService.stop();
       });
   }
 
   update(consultant: Consultant) {
-    return this.http.put(this.baseUrl, consultant).map(res => res.json(), err => console.error(err));
+    this.spinnerService.start();
+    return this.http.put(this.baseUrl, consultant).map(res => {
+      this.spinnerService.stop();
+      return res.json();
+    }, err => {
+      this.spinnerService.stop();
+    });
   }
 
   progressState(consultant: Consultant) {
-    return this.http.put(this.baseUrl + '/progressstate', consultant).map(res => res.json(), err => console.error(err));
+    this.spinnerService.start();
+    return this.http.put(this.baseUrl + '/progressstate', consultant).map(res => {
+      this.spinnerService.stop();
+      return res.json();
+    }, err => {
+      this.spinnerService.stop();
+    });
   }
 
   delete(consultant: Consultant) {
-    return this.http.delete(this.baseUrl + "/" + consultant.cn).map(res => res.json(), err => console.error(err));
+    this.spinnerService.start();
+    return this.http.delete(this.baseUrl + "/" + consultant.cn).map(res => {
+      this.spinnerService.stop();
+      return res.json();
+    }, err => {
+      this.spinnerService.stop();
+    });
   }
 }

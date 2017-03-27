@@ -1,3 +1,4 @@
+import { SpinnerService } from './services/spinner.service';
 import { MyDatePickerModule } from 'mydatepicker';
 import { InvitationService } from './services/invitation.service';
 import { ConsultantService } from './services/consultant.service';
@@ -20,7 +21,7 @@ import { AppComponent } from './app.component';
     AppRoutingModule,
     MyDatePickerModule
   ],
-  providers: [ConsultantService, InvitationService],
+  providers: [ConsultantService, InvitationService, SpinnerService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
