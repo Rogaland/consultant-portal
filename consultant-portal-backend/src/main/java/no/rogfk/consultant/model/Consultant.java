@@ -56,6 +56,14 @@ public final class Consultant {
     private String title;
 
     @ApiModelProperty(value = "This will be automatically set", hidden = true)
+    @Attribute(name = "brfkIsAdmUser")
+    private boolean isAdminUser;
+
+    @ApiModelProperty(value = "This will be automatically set", hidden = true)
+    @Attribute(name = "brfkActiveStatusLevel")
+    private String activeStatusLevel;
+
+    @ApiModelProperty(value = "This will be automatically set", hidden = true)
     @Attribute(name = "brfkSource")
     private String source;
 
@@ -182,6 +190,22 @@ public final class Consultant {
 
     public void setSource(String source) {
         this.source = source;
+    }
+
+    public boolean getIsAdminUser() {
+        return isAdminUser;
+    }
+
+    public void setIsAdminUser(boolean isAdminUser) {
+        this.isAdminUser = isAdminUser;
+    }
+
+    public String getActiveStatusLevel() {
+        return activeStatusLevel;
+    }
+
+    public void setActiveStatusLevel(String activeStatusLevel) {
+        this.activeStatusLevel = activeStatusLevel;
     }
 
     public String getExpireDate() {

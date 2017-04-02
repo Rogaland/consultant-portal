@@ -60,5 +60,7 @@ public class ConsultantObjectService {
         consultant.setRoleString(configService.getRoleString());
         consultant.setTitle(configService.getConsultantTitle());
         consultant.setSource(configService.getSource());
+        consultant.setActiveStatusLevel("ON");
+        consultant.setIsAdminUser(true);
     }
 }
