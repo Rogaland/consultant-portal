@@ -25,7 +25,7 @@ public class JanitorService {
         Map<String, List<Consultant>> consultants =  consultantService.getConsultants(null, true);
 
         consultants.get("CONFIRMED").forEach(consultant -> {
-            emailNotifyService.notifyOwnerSoonToExpireConsultant(consultant);
+            //emailNotifyService.notifyOwnerSoonToExpireConsultant(consultant);
         });
 
     }
