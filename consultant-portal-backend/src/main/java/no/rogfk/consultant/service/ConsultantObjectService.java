@@ -26,7 +26,7 @@ public class ConsultantObjectService {
             throw new MissingMandatoryAttribute("Missing mobile phone.");
         }
 
-        String cn = String.format(configService.getUsernamePrefix(), consultant.getMobile());
+        String cn = String.format(configService.getUsernamePrefix(), consultant.getMobile()).replace("+", "00");
         Name dn = LdapNameBuilder.newInstance(
                 configService.getConsultantBaseContainer()).add(LdapConstants.CN, cn).build();
         consultant.setCn(cn);
