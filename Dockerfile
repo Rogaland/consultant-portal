@@ -1,6 +1,5 @@
-FROM java:8
-LABEL authors="Frode Sjovatsen <frode.sjovatsen@rogfk.no>"
-
-ADD consultant-portal-backend/build/libs/consultant-portal-backend-*.jar /data/app.jar
-
-CMD java ${PARAMS} -jar /data/app.jar
+FROM gradle:4.10.2-jdk8-alpine as builder
+USER root
+COPY . .
+RUN gradle --no-daemon build
+RUN find . -ls
