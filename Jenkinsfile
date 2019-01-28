@@ -1,27 +1,11 @@
-#!groovy
-
-node {
-    currentBuild.result = "SUCCESS"
-
-    try {
-        stage('checkout') {
-            checkout scm
+pipeline {
+    agent { label 'docker' }
+    stages {
+        stage('Build') {
+            steps {
+                sh 'git clean -fdx'
+                sh "docker build -t ${GIT_COMMIT} ."
+            }
         }
-
-        stage('build') {
-            sh './gradlew'
-        }
-
-        stage('deploy') {
-            //sh 'chmod +x docker-build'
-            //withCredentials([string(credentialsId: 'rogfkConsultantPortalRunParams', variable: 'runParams')]) {
-            //    sh 'sudo -E sh ./docker-build'
-            // }
-        }
-    }
-
-    catch (err) {
-        currentBuild.result = "FAILURE"
-        throw err
     }
 }
